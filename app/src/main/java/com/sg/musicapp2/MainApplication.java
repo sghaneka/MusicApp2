@@ -45,12 +45,12 @@ public class MainApplication extends Application {
     private MyLocalAppInfo mTopTenSampleMyLocalAppInfo = new MyLocalAppInfo() {
         @Override
         public String getApiKey() {
-            return "NjQzYThjNTEtNmUwOS00NjA1LTg1Y2MtMzkwNTcyZWIyZjk4";
+            return "YzA0NzQ2MzYtMTg3OC00YmRiLTg1ZjItMmVkYjgwOTRmMDUx";
         }
 
         @Override
         public String getSecret() {
-            return "YjE3MGNmZWItZDU3NS00ZjJiLWIwYmMtZjliOTBlNmU4ODBm";
+            return "MzQ4ZDg0NjMtMTliZS00Y2UwLThlZjMtMzU5OTg1ODJkYTg0";
         }
 
         @Override

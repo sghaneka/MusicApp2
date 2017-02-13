@@ -10,4 +10,11 @@
         android:id="@+id/menu_item_login"
         app:showAsAction="ifRoom"
         android:title="@string/login"/>
+    <item
+        android:id="@+id/menu_item_top_tracks"
+        android:title="top tracks"/>
+
+    <item
+        android:id="@+id/menu_item_listening_history"
+        android:title="history"/>
 </menu>

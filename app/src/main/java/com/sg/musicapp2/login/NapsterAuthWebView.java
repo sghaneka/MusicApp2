@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -45,6 +46,7 @@ public class NapsterAuthWebView extends WebView {
         setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, final String url) {
+                Log.d("auth", "in setWebViewClient - url+ " + url);
                 boolean shouldRedirect = url.startsWith(appInfo.getRedirectUrl());
                 if(shouldRedirect) {
                     onRedirectUrl(url, callback);
@@ -52,6 +54,7 @@ public class NapsterAuthWebView extends WebView {
                 return shouldRedirect;
             }
         });
+        Log.d("auth", "in loadLogin..  " + loginUrl);
         loadUrl(loginUrl);
     }
 
