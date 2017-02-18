@@ -10,11 +10,11 @@ import retrofit.client.Response;
  * Created by samgh on 2/8/2017.
  */
 
-public class Metadata {
+public class DataService {
     PlayListService playListService;
     String apiKey;
 
-    public Metadata(String apiKey) {
+    public DataService(String apiKey) {
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint(com.sg.musicapp2.Constants.ENDPOINT_HTTP)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new RestAdapter.Log() {

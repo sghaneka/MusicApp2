@@ -10,7 +10,7 @@ import com.napster.cedar.session.SessionManager;
  * Created by samgh on 2/4/2017.
  */
 
-public class MainApplication extends Application {
+public class MusicApplication extends Application {
 
     protected Napster napster;
     protected Player player;
@@ -30,8 +30,8 @@ public class MainApplication extends Application {
         sessionManager = napster.getSessionManager();
     }
 
-    public MyLocalAppInfo getAppInfo(){
-        return mTopTenSampleMyLocalAppInfo;
+    public MusicAppInfo getAppInfo(){
+        return mTopTenSampleMusicAppInfo;
     }
 
     public Napster getNapster() {
@@ -42,7 +42,7 @@ public class MainApplication extends Application {
         return sessionManager;
     }
 
-    private MyLocalAppInfo mTopTenSampleMyLocalAppInfo = new MyLocalAppInfo() {
+    private MusicAppInfo mTopTenSampleMusicAppInfo = new MusicAppInfo() {
         @Override
         public String getApiKey() {
             return "YzA0NzQ2MzYtMTg3OC00YmRiLTg1ZjItMmVkYjgwOTRmMDUx";

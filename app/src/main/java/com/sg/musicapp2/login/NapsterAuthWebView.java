@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.napster.cedar.session.AuthToken;
-import com.sg.musicapp2.MyLocalAppInfo;
+import com.sg.musicapp2.MusicAppInfo;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -20,7 +20,7 @@ import retrofit.client.Response;
  */
 
 public class NapsterAuthWebView extends WebView {
-    private MyLocalAppInfo appInfo;
+    private MusicAppInfo appInfo;
 
     @SuppressLint("SetJavaScriptEnabled")
     public NapsterAuthWebView(Context context, AttributeSet attrs, int defStyle) {
@@ -38,7 +38,7 @@ public class NapsterAuthWebView extends WebView {
         this(context, null);
     }
 
-    public void setAppInfo(MyLocalAppInfo appInfo) {
+    public void setAppInfo(MusicAppInfo appInfo) {
         this.appInfo = appInfo;
     }
 

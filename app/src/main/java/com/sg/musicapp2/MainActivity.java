@@ -13,34 +13,32 @@ import com.napster.cedar.NapsterError;
 import com.napster.cedar.session.AuthToken;
 import com.napster.cedar.session.SessionCallback;
 import com.napster.cedar.session.SessionManager;
-import com.sg.musicapp2.data.Metadata;
+import com.sg.musicapp2.data.DataService;
 import com.sg.musicapp2.login.NapsterLoginCallback;
 import com.sg.musicapp2.login.NapsterLoginDialogFragment;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.sg.musicapp2.helpers.RetroFitUtil.getStringFromRetrofitResponse;
 
 public class MainActivity extends AppCompatActivity {
 
     private Napster napster;
     private SessionManager sessionManager;
-    MyLocalAppInfo mMyLocalAppInfo;
+    MusicAppInfo mMusicAppInfo;
     NapsterLoginDialogFragment loginDialog;
-    protected Metadata metadata;
+    protected DataService dataService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainApplication app = (MainApplication) getApplication();
+        MusicApplication app = (MusicApplication) getApplication();
         napster = app.getNapster();
-        mMyLocalAppInfo = app.getAppInfo();
+        mMusicAppInfo = app.getAppInfo();
         sessionManager = app.getSessionManager();
-        metadata = new Metadata(app.getAppInfo().getApiKey());
+        dataService = new DataService(app.getAppInfo().getApiKey());
     }
 
     @Override
@@ -72,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void login() {
         Toast.makeText(this, "login clicked...", Toast.LENGTH_SHORT).show();
-        String loginUrl = napster.getLoginUrl(mMyLocalAppInfo.getRedirectUrl());
-        loginDialog = NapsterLoginDialogFragment.newInstance(loginUrl, mMyLocalAppInfo);
+        String loginUrl = napster.getLoginUrl(mMusicAppInfo.getRedirectUrl());
+        loginDialog = NapsterLoginDialogFragment.newInstance(loginUrl, mMusicAppInfo);
         loginDialog.setLoginCallback(loginCallback);
         loginDialog.show(getSupportFragmentManager(), "login");
 
@@ -83,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         new AuthorizedRequest<Response>(Napster.getInstance().getSessionManager()) {
             @Override
             protected void onSessionValid() {
-                // metadata.getPlayListService().getListeningHistory(getAuthorizationBearer(), 5, this);
-                metadata.getPlayListService().getPlayLists(getAuthorizationBearer(), this);
+                // dataService.getPlayListService().getListeningHistory(getAuthorizationBearer(), 5, this);
+             //   dataService.getPlayListService().getPlayLists(getAuthorizationBearer(), this);
             }
 
             @Override
@@ -104,30 +102,6 @@ public class MainActivity extends AppCompatActivity {
         sessionManager.closeSession();
     }
 
-    public static String getStringFromRetrofitResponse(Response response) {
-        //Try to get response body
-        BufferedReader reader = null;
-        StringBuilder sb = new StringBuilder();
-        try {
-
-            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
-
-            String line;
-
-            try {
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return sb.toString();
-
-    }
 
     NapsterLoginCallback loginCallback = new NapsterLoginCallback() {
         @Override
