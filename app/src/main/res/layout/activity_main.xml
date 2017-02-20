@@ -11,10 +11,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.sg.musicapp2.MainActivity">
 
+    <!--
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.sg.musicapp2.PlayListFragment"
-        android:id="@+id/playListFragment"/>
+        android:id="@+id/playListFragment"/> -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/playListFrame">
+
+    </FrameLayout>
 
 </RelativeLayout>
