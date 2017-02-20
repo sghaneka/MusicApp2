@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     MusicAppInfo mMusicAppInfo;
     NapsterLoginDialogFragment loginDialog;
     protected DataService dataService;
-    ArrayList<PlayList> mPlayLists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,45 +49,9 @@ public class MainActivity extends AppCompatActivity {
         sessionManager = app.getSessionManager();
         dataService = new DataService(app.getAppInfo().getApiKey());
 
-        if (savedInstanceState != null){
-            mPlayLists = (ArrayList<PlayList>) savedInstanceState.getSerializable("playlist");
-            for (PlayList p: mPlayLists){
-                Log.d("mainactivity", "on create -  restore instance state: " + p.Name + ":  " +  p.Id);
-            }
-        } else {
-            if (sessionManager.isSessionOpen()){
-                loadPlaylists();
-            }
+        if (sessionManager.isSessionOpen()){
+            loadPlaylists();
         }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        PlayListFragment fragment = PlayListFragment.newIntance(mPlayLists);
-        fragmentTransaction.replace(R.id.playListFrame, fragment);
-        fragmentTransaction.commit();
-
-
-
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        Log.d("mainactivity", "saving instance state");
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putSerializable("playlist", mPlayLists);
-        for (PlayList p: mPlayLists){
-            Log.d("mainactivity", "on save instance state: " + p.Name + ":  " +  p.Id);
-        }
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
-        Log.d("mainactivity", "restoring instance state");
-        super.onRestoreInstanceState(savedInstanceState);
-        /*mPlayLists = (ArrayList<PlayList>) savedInstanceState.getSerializable("playList");
-        for (PlayList p: mPlayLists){
-            Log.d("mainactivity", "on restore instance state: " + p.Name + ":  " +  p.Id);
-        }*/
     }
 
     @Override
@@ -126,10 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     private void logout() {
         sessionManager.closeSession();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        PlayListFragment fragment = PlayListFragment.newIntance(null);
+        fragmentTransaction.replace(R.id.playListFrame, fragment);
+        fragmentTransaction.commit();
     }
 
     public void loadPlaylists(){
@@ -148,10 +114,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void success(PlayLists playLists, Response response) {
                 String res = getStringFromRetrofitResponse(response);
-                mPlayLists = new ArrayList<PlayList>(playLists.playLists);
-                for (PlayList p: playLists.playLists){
+                ArrayList<PlayList> tmpPlayList = new ArrayList<PlayList>(playLists.playLists);
+                for (PlayList p: tmpPlayList){
                     Log.d("mainactivity", "from loadPlaylists..." + p.Name + ":  " +  p.Id);
                 }
+                Log.d("mainactivity","hooking up fragment with data...");
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                PlayListFragment fragment = PlayListFragment.newIntance(tmpPlayList);
+                fragmentTransaction.replace(R.id.playListFrame, fragment);
+                fragmentTransaction.commit();
             }
         }.execute();
 
@@ -165,11 +137,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess() {
                     loginDialog.dismiss();
                     invalidateOptionsMenu();
-                    //sessionManager.getUser().getSubscriptionState().
-                    //onLogin();
-                   // FragmentManager fm = getSupportFragmentManager();
-                   // PlayListFragment f = (PlayListFragment) fm.findFragmentById(R.id.playListFragment);
-                  //  f.loadPlaylists();
                     loadPlaylists();
 
                 }
@@ -187,8 +154,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, getString(R.string.login_error), Toast.LENGTH_LONG).show();
             loginDialog.dismiss();
         }
-
-
 
     };
 }

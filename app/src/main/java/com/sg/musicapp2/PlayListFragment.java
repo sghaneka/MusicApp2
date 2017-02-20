@@ -48,11 +48,11 @@ public class PlayListFragment extends Fragment {
     }
 
     public static PlayListFragment newIntance(ArrayList<PlayList> playLists){
-        PlayListFragment f = new PlayListFragment();
+        PlayListFragment playListFragment = new PlayListFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PLAYLIST_ID, playLists);
-        f.setArguments(args);
-        return f;
+        playListFragment.setArguments(args);
+        return playListFragment;
     }
 
     @Override
@@ -60,19 +60,7 @@ public class PlayListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         MusicApplication app = (MusicApplication) getActivity().getApplication();
         dataService = new DataService(app.getAppInfo().getApiKey());
-        Log.d("playlistfragment", "inside onCreate");
-        if (savedInstanceState != null) {
-            Log.d("playlistfragment", "on create savedinstancestate is not null");
-            mPlayList = (ArrayList<PlayList>) savedInstanceState.getSerializable(ARG_PLAYLIST_ID);
-            if (mPlayList != null){
-                Log.d("playlistfragment", "mPlayList is not null");
-            }else {
-                Log.d("playlistfragment", "mPlayList is null");
-            }
-        } else{
-            Log.d("playlistfragment", "saved instance state is null... oops");
-        }
-
+        mPlayList = (ArrayList<PlayList>) getArguments().getSerializable(ARG_PLAYLIST_ID);
     }
 
 
@@ -80,22 +68,12 @@ public class PlayListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("playlistfragment", "inside onCreateView");
         View view = inflater.inflate(R.layout.fragment_play_list, container, false);
-
-        if (savedInstanceState != null){
-            Log.d("playlistfragment", "savedinstancestate is not null");
-            ArrayList<PlayList> p = (ArrayList<PlayList>) savedInstanceState.getSerializable(ARG_PLAYLIST_ID);
-
-            if (p != null){
-                Log.d("playlistfragment", "p is not null");
-                RecyclerView rvPlayLists = (RecyclerView) view.findViewById(R.id.rvPlayLists);
-                PlayListAdapter pa = new PlayListAdapter(getActivity(), p);
-                rvPlayLists.setAdapter(pa);
-                rvPlayLists.setLayoutManager(new LinearLayoutManager(getActivity()));
-            }else{
-                Log.d("playlistfragment", "p is null");
-            }
+        if (mPlayList != null){
+            RecyclerView rvPlayLists = (RecyclerView) view.findViewById(R.id.rvPlayLists);
+            PlayListAdapter pa = new PlayListAdapter(getActivity(), mPlayList);
+            rvPlayLists.setAdapter(pa);
+            rvPlayLists.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
         return view;
     }
