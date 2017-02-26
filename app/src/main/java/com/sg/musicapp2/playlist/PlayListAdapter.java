@@ -41,7 +41,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListViewHolder> {
         TextView textView = holder.playlistTextView;
         textView.setText(playList.Name);
         Button button = holder.playListGoButton;
-        button.setText("Go !!!");
+        button.setText("GO");
     }
 
     @Override

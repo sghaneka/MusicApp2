@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.napster.cedar.AuthorizedRequest;
@@ -69,11 +70,15 @@ public class PlayListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_play_list, container, false);
+        TextView msgTxt = (TextView) view.findViewById(R.id.textLoginMessage);
         if (mPlayList != null){
             RecyclerView rvPlayLists = (RecyclerView) view.findViewById(R.id.rvPlayLists);
             PlayListAdapter pa = new PlayListAdapter(getActivity(), mPlayList);
             rvPlayLists.setAdapter(pa);
             rvPlayLists.setLayoutManager(new LinearLayoutManager(getActivity()));
+            msgTxt.setVisibility(View.GONE);
+        } else{
+            msgTxt.setVisibility(View.VISIBLE);
         }
         return view;
     }

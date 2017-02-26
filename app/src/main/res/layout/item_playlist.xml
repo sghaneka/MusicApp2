@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <RelativeLayout
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_marginBottom="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/playlist_open_button"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/playlist_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingRight="12dp"
-            />
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textSize="20sp"
+        />
 
-        <Button
-            android:id="@+id/playlist_open_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textSize="10sp"
-            android:layout_toRightOf="@id/playlist_name"
-            />
+    <TextView
+        android:id="@+id/playlist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginTop="8dp"
 
-    </RelativeLayout>
-
-</LinearLayout>
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/playlist_open_button"
+        />
+</RelativeLayout>
