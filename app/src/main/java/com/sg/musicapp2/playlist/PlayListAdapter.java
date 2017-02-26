@@ -38,10 +38,8 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListViewHolder> {
     @Override
     public void onBindViewHolder(PlayListViewHolder holder, int position) {
         PlayList playList = mPlayLists.get(position);
-        TextView textView = holder.playlistTextView;
-        textView.setText(playList.Name);
-        Button button = holder.playListGoButton;
-        button.setText("GO");
+        holder.bindPlayList(playList);
+
     }
 
     @Override
