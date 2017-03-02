@@ -1,5 +1,6 @@
 package com.sg.musicapp2.playlist;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sg.musicapp2.R;
+import com.sg.musicapp2.TracksActivity;
 
 /**
  * Created by samgh on 2/18/2017.
@@ -31,6 +33,8 @@ public class PlayListViewHolder extends RecyclerView.ViewHolder
                Toast.makeText(v.getContext(),
                         "playlist: id " + mPlayList.Id + " name: " + mPlayList.Name,
                         Toast.LENGTH_SHORT).show();
+                Intent i = TracksActivity.newIntent(v.getContext(), mPlayList);
+                v.getContext().startActivity(i);
             }
         });
     }
