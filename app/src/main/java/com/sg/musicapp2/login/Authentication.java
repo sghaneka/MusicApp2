@@ -1,15 +1,11 @@
 package com.sg.musicapp2.login;
 
-import android.provider.SyncStateContract;
-import android.util.Log;
-
 import com.napster.cedar.session.AuthToken;
 import com.sg.musicapp2.Constants;
-import com.sg.musicapp2.MyLocalAppInfo;
+import com.sg.musicapp2.MusicAppInfo;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.android.AndroidLog;
 
 /**
  * Created by samgh on 2/4/2017.
@@ -17,9 +13,9 @@ import retrofit.android.AndroidLog;
 
 public class Authentication {
     AuthenticationService authenticationService;
-    MyLocalAppInfo appInfo;
+    MusicAppInfo appInfo;
 
-    public Authentication(MyLocalAppInfo appInfo) {
+    public Authentication(MusicAppInfo appInfo) {
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(Constants.ENDPOINT_HTTPS)
                 //.setLog(new AndroidLog("resty"))

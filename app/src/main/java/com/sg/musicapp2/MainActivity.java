@@ -1,5 +1,8 @@
 package com.sg.musicapp2;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,34 +16,42 @@ import com.napster.cedar.NapsterError;
 import com.napster.cedar.session.AuthToken;
 import com.napster.cedar.session.SessionCallback;
 import com.napster.cedar.session.SessionManager;
-import com.sg.musicapp2.data.Metadata;
+import com.sg.musicapp2.data.DataService;
 import com.sg.musicapp2.login.NapsterLoginCallback;
 import com.sg.musicapp2.login.NapsterLoginDialogFragment;
+import com.sg.musicapp2.playlist.PlayList;
+import com.sg.musicapp2.playlist.PlayLists;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.sg.musicapp2.helpers.RetroFitUtil.getStringFromRetrofitResponse;
 
 public class MainActivity extends AppCompatActivity {
 
     private Napster napster;
     private SessionManager sessionManager;
-    MyLocalAppInfo mMyLocalAppInfo;
+    MusicAppInfo mMusicAppInfo;
     NapsterLoginDialogFragment loginDialog;
-    protected Metadata metadata;
+    protected DataService dataService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MainApplication app = (MainApplication) getApplication();
+        MusicApplication app = (MusicApplication) getApplication();
         napster = app.getNapster();
-        mMyLocalAppInfo = app.getAppInfo();
+        mMusicAppInfo = app.getAppInfo();
         sessionManager = app.getSessionManager();
-        metadata = new Metadata(app.getAppInfo().getApiKey());
+        dataService = new DataService(app.getAppInfo().getApiKey());
+
+        if (sessionManager.isSessionOpen()){
+            loadPlaylists();
+        }
     }
 
     @Override
@@ -62,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
             invalidateOptionsMenu();
             return true;
         } else if (id == R.id.menu_item_listening_history) {
-            showPlayList();
             return true;
         } else if(id == R.id.menu_item_top_tracks) {
             return true;
@@ -72,60 +82,50 @@ public class MainActivity extends AppCompatActivity {
 
     private void login() {
         Toast.makeText(this, "login clicked...", Toast.LENGTH_SHORT).show();
-        String loginUrl = napster.getLoginUrl(mMyLocalAppInfo.getRedirectUrl());
-        loginDialog = NapsterLoginDialogFragment.newInstance(loginUrl, mMyLocalAppInfo);
+        String loginUrl = napster.getLoginUrl(mMusicAppInfo.getRedirectUrl());
+        loginDialog = NapsterLoginDialogFragment.newInstance(loginUrl, mMusicAppInfo);
         loginDialog.setLoginCallback(loginCallback);
         loginDialog.show(getSupportFragmentManager(), "login");
 
     }
 
-    private void showPlayList(){
-        new AuthorizedRequest<Response>(Napster.getInstance().getSessionManager()) {
+    private void logout() {
+        sessionManager.closeSession();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        PlayListFragment fragment = PlayListFragment.newIntance(null);
+        fragmentTransaction.replace(R.id.playListFrame, fragment);
+        fragmentTransaction.commit();
+    }
+
+    public void loadPlaylists(){
+
+        new AuthorizedRequest<PlayLists>(Napster.getInstance().getSessionManager()) {
             @Override
             protected void onSessionValid() {
-                // metadata.getPlayListService().getListeningHistory(getAuthorizationBearer(), 5, this);
-                metadata.getPlayListService().getPlayLists(getAuthorizationBearer(), this);
+                dataService.getPlayListService().getPlayLists(getAuthorizationBearer(), this);
             }
 
             @Override
             protected void onError(NapsterError napsterError, RetrofitError retrofitError) {
-                Toast.makeText(MainActivity.this, R.string.login_error, Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), R.string.login_error, Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void success(Response tracks, Response response) {
-                String res = getStringFromRetrofitResponse(tracks);
-                Log.d("MainActivity", "from rest... " + res);
+            public void success(PlayLists playLists, Response response) {
+                String res = getStringFromRetrofitResponse(response);
+                ArrayList<PlayList> tmpPlayList = new ArrayList<PlayList>(playLists.playLists);
+                for (PlayList p: tmpPlayList){
+                    Log.d("mainactivity", "from loadPlaylists..." + p.Name + ":  " +  p.Id);
+                }
+                Log.d("mainactivity","hooking up fragment with data...");
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                PlayListFragment fragment = PlayListFragment.newIntance(tmpPlayList);
+                fragmentTransaction.replace(R.id.playListFrame, fragment);
+                fragmentTransaction.commit();
             }
         }.execute();
-    }
-
-    private void logout() {
-        sessionManager.closeSession();
-    }
-
-    public static String getStringFromRetrofitResponse(Response response) {
-        //Try to get response body
-        BufferedReader reader = null;
-        StringBuilder sb = new StringBuilder();
-        try {
-
-            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
-
-            String line;
-
-            try {
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return sb.toString();
 
     }
 
@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess() {
                     loginDialog.dismiss();
                     invalidateOptionsMenu();
-                    //sessionManager.getUser().getSubscriptionState().
-                    //onLogin();
+                    loadPlaylists();
+
                 }
 
                 @Override

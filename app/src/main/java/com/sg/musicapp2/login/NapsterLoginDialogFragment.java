@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
-import com.sg.musicapp2.MyLocalAppInfo;
+import com.sg.musicapp2.MusicAppInfo;
 
 /**
  * Created by samgh on 2/4/2017.
@@ -23,7 +23,7 @@ public class NapsterLoginDialogFragment extends DialogFragment{
     public NapsterLoginDialogFragment() {
     }
 
-    public static NapsterLoginDialogFragment newInstance(String loginUrl, MyLocalAppInfo appInfo) {
+    public static NapsterLoginDialogFragment newInstance(String loginUrl, MusicAppInfo appInfo) {
         NapsterLoginDialogFragment f = new NapsterLoginDialogFragment();
         Bundle args = new Bundle();
         args.putString(BUNDLE_LOGIN_URL, loginUrl);
@@ -36,8 +36,8 @@ public class NapsterLoginDialogFragment extends DialogFragment{
         return getArguments().getString(BUNDLE_LOGIN_URL, "");
     }
 
-    private MyLocalAppInfo getAppInfo() {
-        return (MyLocalAppInfo) getArguments().getSerializable(BUNDLE_APP_INFO);
+    private MusicAppInfo getAppInfo() {
+        return (MusicAppInfo) getArguments().getSerializable(BUNDLE_APP_INFO);
     }
 
     public void setLoginCallback(NapsterLoginCallback loginCallback) {
