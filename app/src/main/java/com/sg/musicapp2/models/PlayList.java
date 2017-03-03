@@ -1,4 +1,4 @@
-package com.sg.musicapp2.playlist;
+package com.sg.musicapp2.models;
 
 import com.google.gson.annotations.SerializedName;
 

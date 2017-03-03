@@ -6,13 +6,13 @@ package com.sg.musicapp2.data;
 
 
 
-import com.sg.musicapp2.playlist.PlayLists;
+import com.sg.musicapp2.models.PlayLists;
+import com.sg.musicapp2.models.Tracks;
 
 import retrofit.Callback;
-import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.Header;
-import retrofit.http.Query;
+import retrofit.http.Path;
 
 
 public interface PlayListService {
@@ -22,4 +22,15 @@ public interface PlayListService {
             @Header(Constants.AUTHORIZAION) String authorization,
             Callback<PlayLists> callback);
 
+    @GET("/v2.1/me/library/playlists/{playlistId}")
+    public void getPlayListDetails(
+            @Header(Constants.AUTHORIZAION) String authorization,
+            @Path("playlistId") String playlistId,
+            Callback<PlayLists> callback);
+
+    @GET("/v2.1/me/library/playlists/{playlistId}/tracks?limit=3")
+    public void getPlayListTracks(
+            @Header(Constants.AUTHORIZAION) String authorization,
+            @Path("playlistId") String playlistId,
+            Callback<Tracks> callback);
 }

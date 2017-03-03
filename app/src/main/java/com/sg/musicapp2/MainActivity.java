@@ -1,6 +1,5 @@
 package com.sg.musicapp2;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,12 +18,10 @@ import com.napster.cedar.session.SessionManager;
 import com.sg.musicapp2.data.DataService;
 import com.sg.musicapp2.login.NapsterLoginCallback;
 import com.sg.musicapp2.login.NapsterLoginDialogFragment;
-import com.sg.musicapp2.playlist.PlayList;
-import com.sg.musicapp2.playlist.PlayLists;
+import com.sg.musicapp2.models.PlayList;
+import com.sg.musicapp2.models.PlayLists;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;

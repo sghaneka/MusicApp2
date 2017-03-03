@@ -5,30 +5,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.napster.cedar.AuthorizedRequest;
-import com.napster.cedar.Napster;
-import com.napster.cedar.NapsterError;
 import com.sg.musicapp2.data.DataService;
 import com.sg.musicapp2.playlist.Contact;
-import com.sg.musicapp2.playlist.ContactsAdapter;
-import com.sg.musicapp2.playlist.PlayList;
+import com.sg.musicapp2.models.PlayList;
 import com.sg.musicapp2.playlist.PlayListAdapter;
-import com.sg.musicapp2.playlist.PlayLists;
 
 import java.util.ArrayList;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-import static com.sg.musicapp2.helpers.RetroFitUtil.getStringFromRetrofitResponse;
 
 
 /**
