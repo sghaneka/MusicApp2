@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sg.musicapp2.R;
-import com.sg.musicapp2.TracksActivity;
+import com.sg.musicapp2.tracks.TracksActivity;
 import com.sg.musicapp2.models.PlayList;
 
 /**

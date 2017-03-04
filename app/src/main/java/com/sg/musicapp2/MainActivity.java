@@ -20,6 +20,7 @@ import com.sg.musicapp2.login.NapsterLoginCallback;
 import com.sg.musicapp2.login.NapsterLoginDialogFragment;
 import com.sg.musicapp2.models.PlayList;
 import com.sg.musicapp2.models.PlayLists;
+import com.sg.musicapp2.playlist.PlayListFragment;
 
 import java.util.ArrayList;
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         sessionManager.closeSession();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        PlayListFragment fragment = PlayListFragment.newIntance(null);
+        PlayListFragment fragment = PlayListFragment.newInstance(null);
         fragmentTransaction.replace(R.id.playListFrame, fragment);
         fragmentTransaction.commit();
     }
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("mainactivity","hooking up fragment with data...");
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                PlayListFragment fragment = PlayListFragment.newIntance(tmpPlayList);
+                PlayListFragment fragment = PlayListFragment.newInstance(tmpPlayList);
                 fragmentTransaction.replace(R.id.playListFrame, fragment);
                 fragmentTransaction.commit();
             }

@@ -1,4 +1,4 @@
-package com.sg.musicapp2;
+package com.sg.musicapp2.playlist;
 
 
 import android.os.Bundle;
@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sg.musicapp2.MusicApplication;
+import com.sg.musicapp2.R;
 import com.sg.musicapp2.data.DataService;
-import com.sg.musicapp2.playlist.Contact;
 import com.sg.musicapp2.models.PlayList;
-import com.sg.musicapp2.playlist.PlayListAdapter;
 
 import java.util.ArrayList;
 
@@ -22,8 +22,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class PlayListFragment extends Fragment {
-
-    ArrayList<Contact> contacts;
 
     ArrayList<PlayList> mPlayList;
 
@@ -35,7 +33,7 @@ public class PlayListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static PlayListFragment newIntance(ArrayList<PlayList> playLists){
+    public static PlayListFragment newInstance(ArrayList<PlayList> playLists){
         PlayListFragment playListFragment = new PlayListFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PLAYLIST_ID, playLists);

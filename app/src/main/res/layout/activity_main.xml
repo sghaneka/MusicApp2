@@ -15,7 +15,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.sg.musicapp2.PlayListFragment"
+        android:name="com.sg.musicapp2.playlist.PlayListFragment"
         android:id="@+id/playListFragment"/> -->
 
     <FrameLayout

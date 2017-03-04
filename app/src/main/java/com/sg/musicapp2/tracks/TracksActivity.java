@@ -1,11 +1,12 @@
-package com.sg.musicapp2;
+package com.sg.musicapp2.tracks;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.napster.cedar.AuthorizedRequest;
@@ -13,9 +14,11 @@ import com.napster.cedar.Napster;
 import com.napster.cedar.NapsterError;
 import com.napster.cedar.player.data.Track;
 import com.napster.cedar.session.SessionManager;
+import com.sg.musicapp2.MusicAppInfo;
+import com.sg.musicapp2.MusicApplication;
+import com.sg.musicapp2.R;
 import com.sg.musicapp2.data.DataService;
 import com.sg.musicapp2.models.PlayList;
-import com.sg.musicapp2.models.PlayLists;
 import com.sg.musicapp2.models.Tracks;
 
 import java.util.ArrayList;
@@ -30,8 +33,6 @@ public class TracksActivity extends AppCompatActivity {
     private static final String EXTRA_PLAYLIST_ID = "playlist_id";
 
     private PlayList mPlayList;
-
-    private TextView mTextView;
 
     private Napster napster;
     private SessionManager sessionManager;
@@ -59,8 +60,7 @@ public class TracksActivity extends AppCompatActivity {
 
 
         mPlayList = (PlayList) getIntent().getSerializableExtra(EXTRA_PLAYLIST_ID);
-        mTextView = (TextView) findViewById(R.id.txtTitle);
-        mTextView.setText(mPlayList.Name);
+
 
         if (sessionManager.isSessionOpen()){
             loadPlaylistDetails();
@@ -87,6 +87,12 @@ public class TracksActivity extends AppCompatActivity {
                 for (Track p: tmpTracks){
                     Log.d("tracksActivity", "from loadtracksfromplaylist..." + p.name + ":  " +  p.artistName);
                 }
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                TracksFragment fragment = TracksFragment.newInstance(tmpTracks);
+                fragmentTransaction.replace(R.id.tracksFrame, fragment);
+                fragmentTransaction.commit();
 
             }
         }.execute();
