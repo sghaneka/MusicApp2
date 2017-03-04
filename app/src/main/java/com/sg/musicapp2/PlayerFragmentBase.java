@@ -21,7 +21,7 @@ import com.napster.cedar.player.data.Track;
 /**
  * A simple {@link Fragment} subclass.
  */
-public abstract class PlayerFragment extends Fragment implements PlayerStateListener, View.OnClickListener {
+public abstract class PlayerFragmentBase extends Fragment implements PlayerStateListener, View.OnClickListener {
 
     protected static final String LOADING = "...";
     final static int PROGRESS_SMOOTHING_FACTOR = 100;
