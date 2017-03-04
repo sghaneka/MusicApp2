@@ -38,6 +38,10 @@ public class MusicApplication extends Application {
         return napster;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public SessionManager getSessionManager() {
         return sessionManager;
     }
