@@ -16,6 +16,7 @@ import com.napster.cedar.player.data.Track;
 import com.napster.cedar.session.SessionManager;
 import com.sg.musicapp2.MusicAppInfo;
 import com.sg.musicapp2.MusicApplication;
+import com.sg.musicapp2.PlayerFragment;
 import com.sg.musicapp2.R;
 import com.sg.musicapp2.data.DataService;
 import com.sg.musicapp2.models.PlayList;
@@ -103,5 +104,8 @@ public class TracksActivity extends AppCompatActivity implements TracksFragment.
         Toast.makeText(this,
                 "from activity: track: id" + track.id + " track: name: " +
                         track.name, Toast.LENGTH_SHORT).show();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        PlayerFragment playerFragment = (PlayerFragment)fragmentManager.findFragmentByTag("thebloodyplayer");
+        playerFragment.setTrack(track);
     }
 }

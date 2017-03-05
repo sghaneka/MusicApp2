@@ -22,6 +22,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".tracks.TracksActivity"></activity>
+
+        <service android:name="com.napster.player.NapsterPlaybackService" />
+
+        <receiver android:name="com.napster.player.MediaButtonReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.napster.cedar.NetworkConnectivityReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
