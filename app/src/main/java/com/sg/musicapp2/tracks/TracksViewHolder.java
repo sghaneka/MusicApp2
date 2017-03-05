@@ -18,6 +18,7 @@ public class TracksViewHolder extends RecyclerView.ViewHolder {
     public TextView trackNameTextView;
     public Button playBtn;
     private Track mTrack;
+    private TracksFragment.OnTrackSelectedListener mListener;
 
 
     public TracksViewHolder(View itemView) {
@@ -27,16 +28,16 @@ public class TracksViewHolder extends RecyclerView.ViewHolder {
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),
-                        "track: id" + mTrack.id + " track: name: " +
-                                mTrack.name, Toast.LENGTH_SHORT).show();
+
+                mListener.onTrackSelected(mTrack);
             }
         });
     }
 
-    public void bindTrack(Track track){
+    public void bindTrack(Track track, TracksFragment.OnTrackSelectedListener listener){
         trackNameTextView.setText(track.name);
         playBtn.setText("Play");
         mTrack = track;
+        mListener = listener;
     }
 }

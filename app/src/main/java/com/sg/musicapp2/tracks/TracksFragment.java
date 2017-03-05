@@ -1,6 +1,7 @@
 package com.sg.musicapp2.tracks;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ public class TracksFragment extends Fragment {
 
     public static final String ARG_TRACKS = "tracks";
     ArrayList<Track> mTracks;
+    private OnTrackSelectedListener listener;
 
     public TracksFragment() {
         // Required empty public constructor
@@ -36,6 +38,16 @@ public class TracksFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        if( context instanceof OnTrackSelectedListener){
+            listener = (OnTrackSelectedListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement TracksFragment.OnTrackSelectedListener");
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mTracks = (ArrayList<Track>) getArguments().getSerializable(ARG_TRACKS);
@@ -47,10 +59,14 @@ public class TracksFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tracks, container, false);
         RecyclerView rvTracks = (RecyclerView) view.findViewById(R.id.rvTracks);
-        TracksAdapter tracksAdapter = new TracksAdapter(getActivity(), mTracks);
+        TracksAdapter tracksAdapter = new TracksAdapter(getActivity(), mTracks, listener);
         rvTracks.setAdapter(tracksAdapter);
         rvTracks.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
+    }
+
+    public interface OnTrackSelectedListener {
+        public void onTrackSelected(Track track);
     }
 
 }

@@ -28,7 +28,7 @@ import retrofit.client.Response;
 
 import static com.sg.musicapp2.helpers.RetroFitUtil.getStringFromRetrofitResponse;
 
-public class TracksActivity extends AppCompatActivity {
+public class TracksActivity extends AppCompatActivity implements TracksFragment.OnTrackSelectedListener {
 
     private static final String EXTRA_PLAYLIST_ID = "playlist_id";
 
@@ -96,5 +96,12 @@ public class TracksActivity extends AppCompatActivity {
 
             }
         }.execute();
+    }
+
+    @Override
+    public void onTrackSelected(Track track) {
+        Toast.makeText(this,
+                "from activity: track: id" + track.id + " track: name: " +
+                        track.name, Toast.LENGTH_SHORT).show();
     }
 }

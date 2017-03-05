@@ -20,10 +20,12 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksViewHolder> {
 
     private Context mContext;
     private List<Track> mTracks;
+    private TracksFragment.OnTrackSelectedListener mListener;
 
-    public TracksAdapter(Context context, List<Track> tracks){
+    public TracksAdapter(Context context, List<Track> tracks, TracksFragment.OnTrackSelectedListener listener){
         mContext = context;
         mTracks = tracks;
+        mListener = listener;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksViewHolder> {
     @Override
     public void onBindViewHolder(TracksViewHolder holder, int position) {
         Track track = mTracks.get(position);
-        holder.bindTrack(track);
+        holder.bindTrack(track, mListener);
     }
 
     @Override
