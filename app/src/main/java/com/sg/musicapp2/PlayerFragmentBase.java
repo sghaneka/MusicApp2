@@ -17,6 +17,7 @@ import com.napster.cedar.player.PlaybackState;
 import com.napster.cedar.player.Player;
 import com.napster.cedar.player.PlayerStateListener;
 import com.napster.cedar.player.data.Track;
+import com.sg.musicapp2.data.DataService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,17 +39,20 @@ public abstract class PlayerFragmentBase extends Fragment implements PlayerState
     protected View btnPrevious;
     protected TextView tvTrackName;
     protected TextView tvTrackArtist;
+    protected ListView tracksListView;
+    protected TrackAdapter trackAdapter;
 
     protected View miniPlayerContainer;
 
     protected Player player;
-
+    protected DataService metadata;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MusicApplication app = (MusicApplication) getActivity().getApplication();
         player = app.getPlayer();
+        metadata = new DataService(app.getAppInfo().getApiKey());
     }
 
     @Override
@@ -61,6 +65,7 @@ public abstract class PlayerFragmentBase extends Fragment implements PlayerState
         super.onViewCreated(view, savedInstanceState);
         setupViews(view);
         setupSeekBar();
+        setupTracksAdapter();
     }
 
     private void setupViews(View view) {
@@ -77,6 +82,7 @@ public abstract class PlayerFragmentBase extends Fragment implements PlayerState
         btnPrevious.setOnClickListener(this);
         tvTrackName = (TextView) view.findViewById(R.id.track_name);
         tvTrackArtist = (TextView) view.findViewById(R.id.track_artist);
+        tracksListView = (ListView) view.findViewById(R.id.tracks);
         miniPlayerContainer = view.findViewById(R.id.player);
     }
 
@@ -194,6 +200,11 @@ public abstract class PlayerFragmentBase extends Fragment implements PlayerState
         });
     }
 
+    private void setupTracksAdapter() {
+        trackAdapter = new TrackAdapter(getActivity());
+        tracksListView.setAdapter(trackAdapter);
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -227,6 +238,7 @@ public abstract class PlayerFragmentBase extends Fragment implements PlayerState
     protected abstract void playNextTrack();
 
     protected abstract void playPreviousTrack();
+
 
 }
 

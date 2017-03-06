@@ -28,7 +28,7 @@ public interface PlayListService {
             @Path("playlistId") String playlistId,
             Callback<PlayLists> callback);
 
-    @GET("/v2.1/me/library/playlists/{playlistId}/tracks?limit=3")
+    @GET("/v2.1/me/library/playlists/{playlistId}/tracks?limit=10")
     public void getPlayListTracks(
             @Header(Constants.AUTHORIZAION) String authorization,
             @Path("playlistId") String playlistId,

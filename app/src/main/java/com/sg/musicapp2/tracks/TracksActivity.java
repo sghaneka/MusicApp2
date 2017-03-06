@@ -14,6 +14,7 @@ import com.napster.cedar.Napster;
 import com.napster.cedar.NapsterError;
 import com.napster.cedar.player.data.Track;
 import com.napster.cedar.session.SessionManager;
+import com.sg.musicapp2.DemoPlayerFragment;
 import com.sg.musicapp2.MusicAppInfo;
 import com.sg.musicapp2.MusicApplication;
 import com.sg.musicapp2.PlayerFragment;
@@ -91,8 +92,8 @@ public class TracksActivity extends AppCompatActivity implements TracksFragment.
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                TracksFragment fragment = TracksFragment.newInstance(tmpTracks);
-                fragmentTransaction.replace(R.id.tracksFrame, fragment);
+                DemoPlayerFragment fragment = DemoPlayerFragment.newInstance(tmpTracks);
+                fragmentTransaction.replace(R.id.demoPlayerFragment, fragment);
                 fragmentTransaction.commit();
 
             }

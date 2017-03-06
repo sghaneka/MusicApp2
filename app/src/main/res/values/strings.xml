@@ -15,4 +15,10 @@
     <string name="off">Off</string>
     <string name="on">On</string>
     <string name="login_error">Login error!</string>
+
+    <string name="delete">Delete</string>
+    <string name="duplicate">Duplicate</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

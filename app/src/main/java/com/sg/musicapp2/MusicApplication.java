@@ -5,6 +5,7 @@ import android.app.Application;
 import com.napster.cedar.Napster;
 import com.napster.cedar.player.Player;
 import com.napster.cedar.session.SessionManager;
+import com.sg.musicapp2.tracklistplayer.TrackListPlayer;
 
 /**
  * Created by samgh on 2/4/2017.
@@ -14,6 +15,7 @@ public class MusicApplication extends Application {
 
     protected Napster napster;
     protected Player player;
+    protected TrackListPlayer trackListPlayer;
     protected SessionManager sessionManager;
 
     @Override
@@ -25,6 +27,7 @@ public class MusicApplication extends Application {
             return;
         }
         player = napster.getPlayer();
+        trackListPlayer = new TrackListPlayer(player);
 //        player.setNotificationProperties(new NotificationProperties());
 //        player.registerNotificationActionListener(this);
         sessionManager = napster.getSessionManager();
@@ -40,6 +43,10 @@ public class MusicApplication extends Application {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public TrackListPlayer getTrackListPlayer() {
+        return trackListPlayer;
     }
 
     public SessionManager getSessionManager() {
